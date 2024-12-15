@@ -1,0 +1,33 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo k8s Terraform Azure!
+  displayName: 'Run a one-line script'
+- task: DownloadSecureFile@1
+  inputs:
+    secureFile: 'azure_rsa.pub'
+
+- task: TerraformCLI@2
+  name: publickey
+  inputs:
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)tree/master/projects/microservices/01-currency-exchange-microservice-basic/configuration/iaac/aws/kubernetes'
+    commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret)  -var ssh_public_key=$(publickey.secureFilePath)'
+    backendType: 'azurerm'
+    backendServiceArm: 'AzureGroupdevops'
+    ensureBackend: true
+    backendAzureRmResourceGroupName: 'TerraformbackendRG'
+    backendAzureRmResourceGroupLocation: 'South India'
+    backendAzureRmStorageAccountName: 'terraformstoragepriya'
+    backendAzureRmContainerName: 'con-terraformstoragepriya'
+    backendAzureRmKey: 'k8s-dev,tfstate'
+    allowTelemetryCollection: true
