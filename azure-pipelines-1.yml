@@ -1,0 +1,38 @@
+trigger:
+- master
+
+# Use the self-hosted agent pool named 'Windows Agent'
+pool:
+  name: 'Windows Agent'
+
+jobs:
+- job: Job1
+  steps:
+  - powershell: Write-Output "Job1 - Hello, world, changed!"
+    displayName: 'Run a one-line script (PowerShell)'
+  - powershell: |
+      Write-Output "Add other tasks to build, test, and deploy your project."
+      Write-Output "See https://aka.ms/yaml"
+      Write-Output "More information"
+    displayName: 'Run a multi-line script (PowerShell)'
+
+- job: Job2
+  dependsOn: Job1
+  steps:
+  - powershell: Write-Output "Job2!"
+    displayName: 'Run a one-line script (PowerShell)'
+
+- job: Job3
+  dependsOn: Job1
+  steps:
+  - powershell: Write-Output "Job3!"
+    displayName: 'Run a one-line script (PowerShell)'
+
+- job: Job4
+  dependsOn: 
+  - Job2
+  - Job3
+  steps:
+  - powershell: Write-Output "Job4!"
+    displayName: 'Run a one-line script (PowerShell)'
+
