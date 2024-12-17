@@ -1,0 +1,16 @@
+trigger:
+- master
+
+# Use the self-hosted Windows agent pool
+pool:
+  name: 'Windows Agent'   # Replace with your self-hosted agent pool name
+
+steps:
+- powershell: Write-Output "Hello, world!"
+  displayName: 'Run a one-line script (PowerShell)'
+
+- powershell: |
+    Write-Output "Add other tasks to build, test, and deploy your project."
+    Write-Output "See https://aka.ms/yaml"
+  displayName: 'Run a multi-line script (PowerShell)'
+
