@@ -1,0 +1,22 @@
+trigger:
+- none  # Do not trigger automatically; run it manually
+
+pool:
+  name: 'Windows Agent'  # Replace with your self-hosted agent pool name
+
+steps:
+- powershell: |
+    Write-Output "Hello, this is a test of the self-hosted agent!"
+    Write-Output "Agent Name: $env:AGENT_NAME"
+    Write-Output "Machine Name: $env:COMPUTERNAME"
+  displayName: 'Test Self-Hosted Agent'
+
+- powershell: |
+    Write-Output "Current Directory:"
+    Get-Location
+  displayName: 'Check Current Directory'
+
+- powershell: |
+    Write-Output "Listing Files in Work Directory:"
+    Get-ChildItem
+  displayName: 'List Files in Work Directory'
